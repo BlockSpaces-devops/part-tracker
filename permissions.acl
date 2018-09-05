@@ -1,0 +1,79 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule PlantOwnerPartAccess {
+  description: "Grant PlantOwner Part access"
+  participant: "blockspaces.parttracker.PlantOwner"
+  operation: READ
+  resource: "blockspaces.parttracker.Part"
+  action:ALLOW
+}
+
+rule RegulatorPartAccess {
+  description: "Grant Regulator Part access"
+  participant: "blockspaces.parttracker.Regulator"
+  operation: READ
+  resource: "blockspaces.parttracker.Part"
+  action:ALLOW
+}
+
+rule PlantOwnerOrderAccess {
+  description: "Grant PlantOwner Order full access"
+  participant(p): "blockspaces.parttracker.PlantOwner"
+  operation: READ,CREATE,UPDATE,DELETE
+  resource (r): "blockspaces.parttracker.Order"
+  condition:(r.buyer.getIdentifier()==p.getIdentifier())
+  action:ALLOW
+}
+
+rule RegulatorCertificateAccess {
+  description: "Grant Regulator business Certificate access"
+  participant(p): "blockspaces.parttracker.Regulator"
+  operation: READ,CREATE
+  resource (r): "blockspaces.parttracker.Certificate"
+  condition:(r.certIssuer.getIdentifier()==p.getIdentifier())
+  action:ALLOW
+}
+
+rule MechanicPartAccess {
+  description: "Grant PlantOwner business network access"
+  participant: "blockspaces.parttracker.Mechanic"
+  operation: READ
+  resource: "blockspaces.parttracker.Part"
+  action:ALLOW
+}
+
+rule MechanicCertificateAccess {
+  description: "Grant PlantOwner business network access"
+  participant: "blockspaces.parttracker.Mechanic"
+  operation: READ
+  resource: "blockspaces.parttracker.Certificate"
+  action:ALLOW
+}
