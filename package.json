@@ -3,7 +3,7 @@
     "composer": "^0.19.6"
   },
   "name": "part-tracker",
-  "version": "0.0.1",
+  "version": "0.0.32",
   "description": "Part Manufacturing Demo Network",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/part-tracker.bna",

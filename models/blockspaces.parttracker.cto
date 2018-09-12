@@ -50,15 +50,15 @@ participant CertifyingOracle extends PartTrackerParticipant {
  * Asset Section
  */
 
- asset Part identified by partID {
-   o String partID
+ asset Part identified by partSN {
+   o String partSN
    o String partName
    o String partNumber
-   o String partSN
    o Double price
    -->Manufacturer manufacturer
    o CertificationStatus certStatus default='PENDING'
-   -->Certificate certificate
+   -->Certificate certificate optional
+   -->PlantOwner owner optional
  }
 
  concept OrderEntry {
@@ -72,18 +72,28 @@ participant CertifyingOracle extends PartTrackerParticipant {
    -->PlantOwner buyer
  }
 
+ asset CertificateRequest identified by certReqId {
+   o String certReqId
+   -->Part part
+   -->CertifyingOracle certIssuer
+   o CertificationStatus certStatus default='PENDING'
+ }
+
  asset Certificate identified by certId {
    o String certId
-   -->Regulator certIssuer
+   -->Part part
+   -->CertifyingOracle certIssuer
+   o CertificationStatus certStatus default='PENDING'
  }
 
  asset MaintenanceTask identified by taskId {
    o String taskId
    -->Part[] parts
    -->Mechanic mechanic
+   -->PlantOwner buyer
    o MaintenanceStatus status default='PENDING'
-
  }
+
  enum CertificationStatus {
    o PENDING
    o APPROVED
@@ -91,6 +101,7 @@ participant CertifyingOracle extends PartTrackerParticipant {
  }
  enum MaintenanceStatus {
    o PENDING
+   o IN_PROGRESS
    o COMPLETE
  }
 
@@ -121,6 +132,7 @@ event PartsOrdered {
 event PartsInstalled {
   -->Part[] parts
   -->Mechanic mechanic
+  -->PlantOwner buyer
 }
 
 /**
@@ -130,15 +142,16 @@ event PartsInstalled {
  transaction RequestPartCertification {
    -->Part part
    -->CertifyingOracle certifier
+   -->Manufacturer manufacturer
  }
 
  transaction ApprovePartCertification {
-   -->Part part
+   -->CertificateRequest certRequest
    -->CertifyingOracle certifier
  }
 
  transaction DenyPartCertification {
-   -->Part part
+   -->CertificateRequest certRequest
    -->CertifyingOracle certifier
  }
 
@@ -148,6 +161,7 @@ transaction OrderParts {
  }
 
  transaction InstallParts {
-   -->Part part
+   -->Part[] parts
    -->PlantOwner buyer
+   -->Mechanic mechanic
  }

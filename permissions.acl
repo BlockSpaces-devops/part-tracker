@@ -53,6 +53,14 @@ rule PlantOwnerOrderAccess {
   action:ALLOW
 }
 
+rule PlantOwnerCertificateAccess {
+  description: "Grant PlantOwner business network access"
+  participant: "blockspaces.parttracker.PlantOwner"
+  operation: READ
+  resource: "blockspaces.parttracker.Certificate"
+  action:ALLOW
+}
+
 rule RegulatorCertificateAccess {
   description: "Grant Regulator business Certificate access"
   participant(p): "blockspaces.parttracker.Regulator"
@@ -73,6 +81,22 @@ rule MechanicPartAccess {
 rule MechanicCertificateAccess {
   description: "Grant PlantOwner business network access"
   participant: "blockspaces.parttracker.Mechanic"
+  operation: READ
+  resource: "blockspaces.parttracker.Certificate"
+  action:ALLOW
+}
+
+rule ManufacturerRequestCertificationTXAccess {
+  description: "Grant PlantOwner business network access"
+  participant: "blockspaces.parttracker.Manufacturer"
+  operation: READ
+  resource: "blockspaces.parttracker.RequestPartCertification"
+  action:ALLOW
+}
+
+rule ManufacturerCertificateAccess {
+  description: "Grant PlantOwner business network access"
+  participant: "blockspaces.parttracker.Manufacturer"
   operation: READ
   resource: "blockspaces.parttracker.Certificate"
   action:ALLOW
