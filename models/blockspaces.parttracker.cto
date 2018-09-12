@@ -1,0 +1,167 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace blockspaces.parttracker
+
+/**
+ * Participant Section
+ */
+
+abstract participant PartTrackerParticipant identified by participantKey {
+  o String participantKey
+  o String name
+  o String orgName 
+}
+
+participant Manufacturer extends PartTrackerParticipant {
+}
+
+participant Insurance extends PartTrackerParticipant {
+}
+
+participant Mechanic extends PartTrackerParticipant {
+}
+
+participant Regulator extends PartTrackerParticipant {
+}
+
+participant PlantOwner extends PartTrackerParticipant {
+}
+
+participant CertifyingOracle extends PartTrackerParticipant {
+}
+
+/**
+ * Asset Section
+ */
+
+ asset Part identified by partSN {
+   o String partSN
+   o String partName
+   o String partNumber
+   o Double price
+   -->Manufacturer manufacturer
+   o CertificationStatus certStatus default='PENDING'
+   -->Certificate certificate optional
+   -->PlantOwner owner optional
+ }
+
+ concept OrderEntry {
+   -->Part part
+   o Integer qty
+ }
+
+ asset Order identified by orderNumber {
+   o String orderNumber
+   o OrderEntry[] orderEntries
+   -->PlantOwner buyer
+ }
+
+ asset CertificateRequest identified by certReqId {
+   o String certReqId
+   -->Part part
+   -->CertifyingOracle certIssuer
+   o CertificationStatus certStatus default='PENDING'
+ }
+
+ asset Certificate identified by certId {
+   o String certId
+   -->Part part
+   -->CertifyingOracle certIssuer
+   o CertificationStatus certStatus default='PENDING'
+ }
+
+ asset MaintenanceTask identified by taskId {
+   o String taskId
+   -->Part[] parts
+   -->Mechanic mechanic
+   -->PlantOwner buyer
+   o MaintenanceStatus status default='PENDING'
+ }
+
+ enum CertificationStatus {
+   o PENDING
+   o APPROVED
+   o DENIED
+ }
+ enum MaintenanceStatus {
+   o PENDING
+   o IN_PROGRESS
+   o COMPLETE
+ }
+
+/**
+ * Event Section
+ */
+
+event PartCertRequested {
+  -->Part part
+  -->CertifyingOracle certifier
+}
+
+event PartCertAppoved {
+  -->Part part
+  -->CertifyingOracle certifier
+}
+
+event PartCertDenied {
+  -->Part part
+  -->CertifyingOracle certifier
+}
+
+event PartsOrdered {
+  -->Part[] parts
+  -->PlantOwner buyer
+}
+
+event PartsInstalled {
+  -->Part[] parts
+  -->Mechanic mechanic
+  -->PlantOwner buyer
+}
+
+/**
+ * Transaction Section
+ */
+
+ transaction RequestPartCertification {
+   -->Part part
+   -->CertifyingOracle certifier
+   -->Manufacturer manufacturer
+ }
+
+ transaction ApprovePartCertification {
+   -->CertificateRequest certRequest
+   -->CertifyingOracle certifier
+ }
+
+ transaction DenyPartCertification {
+   -->CertificateRequest certRequest
+   -->CertifyingOracle certifier
+ }
+
+transaction OrderParts {
+   o OrderEntry[] orderEntries
+   -->PlantOwner buyer
+ }
+
+ transaction InstallParts {
+   -->Part[] parts
+   -->PlantOwner buyer
+   -->Mechanic mechanic
+ }

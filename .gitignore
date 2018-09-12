@@ -1,3 +1,6 @@
+#Mac-specific
+.DS_Store
+
 # Logs
 logs
 *.log
@@ -59,3 +62,7 @@ typings/
 
 # next.js build output
 .next
+
+# Other network files
+*.card
+*.bna
