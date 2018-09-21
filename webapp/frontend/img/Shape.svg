@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="25px" viewBox="0 0 28 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g   stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Menu---Desktop" transform="translate(-666.000000, -518.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="social-media" transform="translate(465.000000, 495.000000)">
+                <g id="telegram" transform="translate(180.000000, 0.000000)">
+                    <path d="M44.6945267,45.8598675 L48.9207964,25.9373388 C49.2942978,24.183906 48.2878679,23.4939403 47.1379251,23.9244789 L22.2991609,33.4975226 C20.6027653,34.1580497 20.6322039,35.1074425 22.0121352,35.5379811 L28.3653391,37.5214024 L43.1140453,28.2353844 C43.804011,27.7754073 44.4369395,28.0348344 43.9199252,28.4948115 L31.9899588,39.2748351 L31.5299817,45.830429 C32.1905088,45.830429 32.4793744,45.5434033 32.8234373,45.1975005 L35.9273629,42.2076492 L42.3670425,46.9509332 C43.5464238,47.6114604 44.3799023,47.2673975 44.6963666,45.8580276 L44.6945267,45.8598675 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
