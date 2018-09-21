@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rainy Day Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Saira:200,300,400,500,600" rel="stylesheet">
+    <link rel="stylesheet" href="normal.css" type="text/css">
+    <link rel="stylesheet" href="rainy-ui.css" type="text/css">
+    <style>
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity .5s ease-out, transform .5s ease-out;
+        }
+        
+        #page1 {
+            display: block;
+        }
+        
+        .fullscreen-nav {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="layout">
+
+
+
+    <div class="page js-page landingpage" id="page1">
+
+        <header class="hero">
+
+            <div class="topnav">
+
+                <div onclick="document.body.classList.add('nav-open')" class="hamburger-icon nav-trigger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <h1><span>Get your</span> Rainy Day Insurance
+                <span class="subtitle">RECEIVE <strong>FREE</strong> BLCK TOKENS</span>
+            </h1>
+
+
+            <div class="button-container">
+                <button onclick="window.location.href='#page2'" class="primary">NEXT</button>
+            </div>
+        </header>
+
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    
+</body>
+
+</html>

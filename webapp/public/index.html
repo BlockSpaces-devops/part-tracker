@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+
+    <head>
+        <base href="/">
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Part Tracker Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="/javascripts/jquery-1.4.2.min.js"></script> 
+       
+        <style>
+            
+
+            .page {
+                display: block;
+                opacity: 1;
+                transition: opacity .5s ease-out, transform .5s ease-out;
+            }
+            
+            #page1 {
+                display: block;
+            }
+            
+            .fullscreen-nav {
+                opacity: 0;
+            }
+
+            .supply-chain-member {
+                display: block;
+                float: left;
+                border: 1px black solid;
+                height: 350px;
+                width: 150px;
+                text-align: center;
+            }
+
+            .supply-chain-member .title {
+                width: 148px;
+                height: 25px;
+                text-align: center;
+            }
+
+            .supply-chain-member .controller {}
+
+            .supply-chain-member .image {
+                height: 250px;
+                width: 140px;
+            }
+
+            .supply-chain-connection {
+                display: block;
+                float: left;
+                border: 1px black solid;
+                margin-top: 150px;
+                margin-left: 20px;
+                margin-right: 20px;
+                height: 50px;
+                width: 50px;
+            }
+
+            .supply-chain-connection .image {
+                height: 50px;
+                width: 50px;
+            }
+
+            .blockchain-log {
+                display: block;
+                float: right;
+                border: 1px black solid;
+                height: 900px;
+                width: 250px;}
+
+            .blockchain-log .header {}
+
+            .blockchain-log .entries {}
+
+            .log-entry {
+                width: 245px;
+                height: 30px;
+                margin-top: 5px;
+            }
+
+        </style>
+
+
+    </head>
+
+    <body class="layout">
+
+            <script>
+        
+                    window.setInterval(checkBlockchain, 2000);
+            
+                    
+                    function checkBlockchain(){
+                        jQuery.getJSON("http://localhost:3000/lastResponse", function(data) {
+                            if (data != '') {
+                                $('#blockchainEntries').append('<div class="log-entry">'+data.message+'</div>');
+                                jQuery.getJSON("http://localhost:3000/clearLastResponse", function(moreData){});
+                            }
+                        });
+                    }
+                        
+                    function createPart(){
+                        jQuery.getJSON("http://localhost:3000/createPart", function(data){
+                            console.log('Created a part');
+                            console.log(data);
+                        })
+                    }
+                    function certifyPart(){
+                        jQuery.getJSON("http://localhost:3000/certifyPart", function(data){
+                            console.log('Certified a part');
+                            console.log(data);
+                        })
+                    }
+                    function purchasePart(){
+                        jQuery.getJSON("http://localhost:3000/purchasePart", function(data){
+                            console.log('Purchased a part');
+                            console.log(data);
+                        })
+                    }
+                    function installPart(){
+                        jQuery.getJSON("http://localhost:3000/installCertifiedPart", function(data){
+                            console.log('Installed a part');
+                            console.log(data);
+                        })
+                    }
+                    
+                    
+                    
+                    </script>
+
+
+        <div class="supply-chain-member">
+            <div class="title">Manufacturer</div>
+            <div class="controller">
+                <button type="button" onclick="createPart()">Create Part</button>
+            </div>
+            <img class="image" src="/images/manufacturer.png"/>
+        </div>
+        <div class="supply-chain-connection">
+            <img class="image" src="/images/arrow.jpg"/>
+        </div>
+        <div class="supply-chain-member">
+            <div class="title">Certifier</div>
+            <div class="controller">
+                <button type="button" onclick="certifyPart()">Certify Part</button>
+            </div>
+            <img class="image" src="/images/certifier.png"/>
+        </div>
+        <div class="supply-chain-connection">
+            <img class="image" src="/images/arrow.jpg"/>
+        </div>
+        <div class="supply-chain-member">
+            <div class="title">Purchaser</div>
+            <div class="controller">
+                <button type="button" onclick="purchasePart()">Purchase Part</button>
+            </div>
+            <img class="image" src="/images/purchaser.png"/>
+        </div>
+        <div class="supply-chain-connection">
+            <img class="image" src="/images/arrow.jpg"/>
+        </div>
+        <div class="supply-chain-member">
+            <div class="title">Installer</div>
+            <div class="controller">
+                <button type="button" onclick="installPart()">Install Part</button>
+            </div>
+            <img class="image" src="/images/installer.png"/>
+        </div>
+        <div class="blockchain-log">
+            <div class="header">BLOCKCHAIN LOG</div>
+            <div class="entries" id="blockchainEntries"></div>
+        </div>
+    </body>
+
+</html>
